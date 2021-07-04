@@ -1,0 +1,113 @@
+﻿<Window x:Class="Contacts_ADO.NET.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Icon="../Assets/profile.png"
+        Title="Contact List" Height="600" Width="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="#073b4c">
+            <StackPanel
+                Margin="0,55"
+                Name="stckpnl_ContactData"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top">
+                <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                    <Border Style="{StaticResource TextBoxBorderStyle}">
+                        <TextBox Style="{StaticResource ConctactTextBoxStyle}" Text="{Binding Name}"/>
+                    </Border>
+                    <Label Content="Name" Style="{StaticResource ContactLabelStyle}"/>
+                </StackPanel>
+                <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                    <Border Style="{StaticResource TextBoxBorderStyle}">
+                        <TextBox Style="{StaticResource ConctactTextBoxStyle}" Text="{Binding Surname}"/>
+                    </Border>
+                    <Label Content="Surname" Style="{StaticResource ContactLabelStyle}"/>
+                </StackPanel>
+                <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                    <Border Style="{StaticResource TextBoxBorderStyle}">
+                        <TextBox Style="{StaticResource ConctactTextBoxStyle}" Text="{Binding Phone}"/>
+                    </Border>
+                    <Label Content="Phone" Style="{StaticResource ContactLabelStyle}"/>
+                </StackPanel>
+                <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                    <Border Style="{StaticResource TextBoxBorderStyle}">
+                        <TextBox Style="{StaticResource ConctactTextBoxStyle}" Text="{Binding Email}"/>
+                    </Border>
+                    <Label Content="Email" Style="{StaticResource ContactLabelStyle}"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel
+                Name="stckpnl_Buttons"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,10"
+                VerticalAlignment="Bottom">
+                <Button
+                    Content="Get Contacts"
+                    HorizontalAlignment="Left"
+                    Background="#ef476f"
+                    Style="{StaticResource ContactButtonStyle}"
+                    Command="{Binding GetContactsCommand}"/>
+                <Button 
+                    Content="Add Contact"
+                    HorizontalAlignment="Right"
+                    Background="#ffd166"
+                    Style="{StaticResource ContactButtonStyle}"
+                    Command="{Binding AddContactCommand}"/>
+                <Button 
+                    Content="Delete Contact"
+                    HorizontalAlignment="Right"
+                    Background="#06d6a0"
+                    Style="{StaticResource ContactButtonStyle}"
+                    Command="{Binding DeleteContactCommand}"
+                    CommandParameter="{Binding ElementName=dg_Contacts}"/>
+                <Button 
+                    Content="Update Contact"
+                    HorizontalAlignment="Right"
+                    Background="#118ab2"
+                    Style="{StaticResource ContactButtonStyle}"
+                    Command="{Binding UpdateContactCommand}"
+                    CommandParameter="{Binding ElementName=dg_Contacts}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="#073b4c">
+            <Label 
+                Content="Contacts"
+                HorizontalAlignment="Center"
+                FontSize="30"
+                Foreground="White"
+                FontWeight="Bold"/>
+            <DataGrid
+                Name="dg_Contacts"
+                Margin="10,50,10,10"
+                IsReadOnly="True"
+                AutoGenerateColumns="False"
+                ItemsSource="{Binding Contacts}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Binding="{Binding Id}" Width="30" Header="Id"></DataGridTextColumn>
+                    <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Binding="{Binding Name}" Width="100" Header="Name"></DataGridTextColumn>
+                    <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Binding="{Binding Surname}" Width="100" Header="Surname"></DataGridTextColumn>
+                    <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Binding="{Binding Phone}" Width="100" Header="Phone"></DataGridTextColumn>
+                    <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Binding="{Binding Email}" Width="*" Header="Email"></DataGridTextColumn>
+                </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectedRowChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contacts_ADO.NET.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -25,20 +26,7 @@ namespace Contacts_ADO.NET
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var connectionString = ConfigurationManager.ConnectionStrings["ContactDatabase"].ConnectionString;
-            SqlConnection connection = new SqlConnection();
-            connection.ConnectionString = connectionString;
-            connection.Open();
-
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandText = "SELECT * FROM Contacts";
-            var data = command.ExecuteReader();
-            MessageBox.Show(data.HasRows.ToString());
+            DataContext = new MainViewModel();
         }
     }
 }
